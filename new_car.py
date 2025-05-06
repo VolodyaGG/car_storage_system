@@ -1,11 +1,17 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from uid_into_py import record_uid
-
+from random import randint
 
 class Add_New_Car:
     def __init__(self, parent):
         self.parent = parent
+        self.uid_label = None
+        self.manufacturer_entry = None
+        self.model_entry = None
+        self.year_entry = None
+        self.country_entry = None
+        self.price_entry = None
         self.create_window()
         self.create_header()
         self.create_content()
@@ -53,7 +59,8 @@ class Add_New_Car:
             image=self.refresh_image, 
             borderwidth=0, 
             bg='#2c3e50', 
-            activebackground='#2c3e50'
+            activebackground='#2c3e50',
+            command=self.refresh_uid
         )
         self.refresh_button.place(relx=0.95, rely=0.5, anchor='center')
 
@@ -72,8 +79,22 @@ class Add_New_Car:
         tk.Frame(self.window, height=4, bg='#3498db').pack(fill='x', side='top')
 
 
+    def refresh_uid(self):
+        new_uid = self.get_uid()
+        self.uid_label.config(text=new_uid if new_uid else "UID не получен")
+        state = 'normal' if new_uid else 'disabled'
 
-    
+        for entry in [
+            self.manufacturer_entry,
+            self.model_entry,
+            self.year_entry,
+            self.country_entry,
+            self.price_entry
+        ]:
+            entry.delete(0, 'end')
+            entry.config(state=state)
+            
+
 
     def create_content(self):
         content = tk.Frame(self.window, bg='#bbbbbb')
@@ -88,7 +109,7 @@ class Add_New_Car:
             font=("Roboto", 15, 'bold')    
         ).grid(row=0, column=0, padx=10, pady=15)
         
-        uid = tk.Label(
+        self.uid_label = tk.Label(
             content,
             fg="#2c3e50",
             bg="#bbbbbb",
@@ -96,10 +117,9 @@ class Add_New_Car:
         )
 
         
-        recieved_uid = self.get_uid()
-        uid.config(text=recieved_uid)
-
-        uid.grid(row=0, column=1, padx=10, pady=15)
+        recieved_uid = self.get_uid() 
+        self.uid_label.config(text=recieved_uid if recieved_uid else "UID не получен")
+        self.uid_label.grid(row=0, column=1, padx=10, pady=15)
 
         #manufacturer
         tk.Label(
@@ -110,13 +130,13 @@ class Add_New_Car:
             font=("Roboto", 15, 'bold')    
         ).grid(row=1, column=0, padx=10, pady=15)
 
-        manufacturer_entry = tk.Entry(
+        self.manufacturer_entry = tk.Entry(
             content,
             fg="#2c3e50",
             bg="#bbbbbb",
             font=("Roboto", 15, 'bold')    
         )
-        manufacturer_entry.grid(row=1, column=1, padx=10, pady=15)
+        self.manufacturer_entry.grid(row=1, column=1, padx=10, pady=15)
 
         #model
         tk.Label(
@@ -127,13 +147,13 @@ class Add_New_Car:
             font=("Roboto", 15, 'bold')    
         ).grid(row=2, column=0, padx=10, pady=15)
 
-        model_entry = tk.Entry(
+        self.model_entry = tk.Entry(
             content,
             fg="#2c3e50",
             bg="#bbbbbb",
             font=("Roboto", 15, 'bold')    
         )
-        model_entry.grid(row=2, column=1, padx=10, pady=15)
+        self.model_entry.grid(row=2, column=1, padx=10, pady=15)
 
         #year
         tk.Label(
@@ -144,13 +164,13 @@ class Add_New_Car:
             font=("Roboto", 15, 'bold')    
         ).grid(row=3, column=0, padx=10, pady=15)
 
-        year_entry = tk.Entry(
+        self.year_entry = tk.Entry(
             content,
             fg="#2c3e50",
             bg="#bbbbbb",
             font=("Roboto", 15, 'bold')    
         )
-        year_entry.grid(row=3, column=1, padx=10, pady=15)
+        self.year_entry.grid(row=3, column=1, padx=10, pady=15)
 
         #country
         tk.Label(
@@ -161,13 +181,13 @@ class Add_New_Car:
             font=("Roboto", 15, 'bold')    
         ).grid(row=4, column=0, padx=10, pady=15)
 
-        country_entry = tk.Entry(
+        self.country_entry = tk.Entry(
             content,
             fg="#2c3e50",
             bg="#bbbbbb",
             font=("Roboto", 15, 'bold')    
         )
-        country_entry.grid(row=4, column=1, padx=10, pady=15)
+        self.country_entry.grid(row=4, column=1, padx=10, pady=15)
 
         #price
         tk.Label(
@@ -178,31 +198,29 @@ class Add_New_Car:
             font=("Roboto", 15, 'bold')    
         ).grid(row=5, column=0, padx=10, pady=15)
 
-        price_entry = tk.Entry(
+        self.price_entry = tk.Entry(
             content,
             fg="#2c3e50",
             bg="#bbbbbb",
             font=("Roboto", 15, 'bold')    
         )
-        price_entry.grid(row=5, column=1, padx=10, pady=15)
-
-        if not recieved_uid:
-            uid.config(text="UID не получен")
-            manufacturer_entry.config(state='disabled')
-            model_entry.config(state='disabled')
-            year_entry.config(state='disabled')
-            country_entry.config(state='disabled')
-            price_entry.config(state='disabled')
-        else:
-            manufacturer_entry.config(state='normal')
-            model_entry.config(state='normal')
-            year_entry.config(state='normal')
-            country_entry.config(state='normal')
-            price_entry.config(state='normal')
-
+        self.price_entry.grid(row=5, column=1, padx=10, pady=15)
+            
+        state = 'normal' if recieved_uid else 'disabled'
+        for entry in [
+            self.manufacturer_entry,
+            self.model_entry,
+            self.year_entry,
+            self.country_entry,
+            self.price_entry    
+        ]:
+            entry.config(state=state)
 
 
     def get_uid(self):
         #return record_uid
-        #return 'AA-BB-CC-DD'
-        return None
+        if randint(1,2) == 1:
+            return 'AA-BB-CC-DD'
+        else:
+            return None
+    
