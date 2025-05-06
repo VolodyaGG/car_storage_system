@@ -16,19 +16,29 @@ class SaveCar:
 
         car_dict = {'uid': uid, 'manufacturer': manufacturer, 'model': model, 'year': year, 'country': country, 'price': price}
 
+        try:
+            with open('cars_data.json', "r", encoding='utf-8') as file:
+                cars = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            cars = []
+
+        uid_list = []
+        for car in cars:
+            uid_list.append(car['uid'])
+            
+
         if car_dict['uid'] == 'UID не получен':
             mb.showerror("Ошибка", "Сначала получите UID")
+            return
+        
+        if car_dict['uid'] in uid_list:
+            mb.showerror('Ошибка', 'UID уже зарегистрирован')
             return
         
         if not(car_dict["manufacturer"] and car_dict["model"] and car_dict["year"]):
             mb.showerror("Ошибка", "Заполните все обязательные поля!")
             return
         
-        try:
-            with open('cars_data.json', "r", encoding='utf-8') as file:
-                cars = json.load(file)
-        except (FileNotFoundError, json.JSONDecodeError):
-            cars = []
         
         cars.append(car_dict)
 
@@ -37,3 +47,4 @@ class SaveCar:
         
         mb.showinfo("Успех", "Автомобиль успешно сохранен!")
         self.parent.window.destroy()  # Закрываем окно добавления
+        self.parent.car_system.update_cards()

@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from new_car import Add_New_Car
+import json
 
 class CarSystem:
     def __init__(self):
@@ -69,37 +70,52 @@ class CarSystem:
 
         my_canvas.configure(xscrollcommand=x_scrollbar.set)
 
-        content = tk.Frame(my_canvas, bg='#bbbbbb')
+        self.content = tk.Frame(my_canvas, bg='#bbbbbb')
 
-        content_window = my_canvas.create_window((0,0),window=content, anchor="n")
+        content_window = my_canvas.create_window((0,0),window=self.content, anchor="n")
         
         def update_scroll_region(event):
             my_canvas.configure(scrollregion=my_canvas.bbox('all'))
 
             canvas_height = my_canvas.winfo_height()
-            content_height = content.winfo_height()
+            content_height = self.content.winfo_height()
             y_offset = max((canvas_height - content_height) // 2, 0)
             my_canvas.coords(content_window, 0, y_offset)
 
-        content.bind("<Configure>", update_scroll_region)
+        self.content.bind("<Configure>", update_scroll_region)
         my_canvas.bind("<Configure>", update_scroll_region)
 
-        card_width = int(self.window.winfo_screenwidth() / 3)
+        self.create_cards()
+
+        self.window.after(100, lambda: my_canvas.xview_moveto(0))
+
+    def create_cards(self):
+        
+        card_width = int(0.6 * self.window.winfo_screenwidth() / 3)
+        card_height = int(0.45 * self.window.winfo_screenheight())
         min_height = 200
 
-        for i in range(8):
+        try:
+            with open('cars_data.json', "r", encoding='utf-8') as file:
+                cars = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            cars = []
+
+        for i in range(len(cars)):
             card = tk.Frame(
-            content,
+            self.content,
                 bg='#3498db',
                 bd=0,
                 highlightthickness=2,
                 highlightbackground="#2980b9",
                 padx=15,
                 pady=15,
-                width=card_width
+                width=card_width,
+                height=card_height
             )
-
-            card.pack(side='left', fill='y', expand=False, padx=40, pady=20)
+            
+            card.pack_propagate(False)
+            card.grid(row=0, column=i, padx=40, pady=20)
 
             spacer = tk.Frame(card, height=min_height, bg='#3498db')
             spacer.pack(fill='x')  
@@ -112,17 +128,26 @@ class CarSystem:
                 bg='#3498db',
                 fg='white'
             ).pack(pady=5)
+            
+            data = (f"Производитель: {cars[i]['manufacturer']}\n"
+                f"Модель: {cars[i]['model']}\n"
+                f"Год: {cars[i]['year']}\n"
+                f"Страна: {cars[i]['country']}\n"
+                f"Цена: {cars[i]['price']}"
+            )
 
             desc = tk.Label(
                 card,
-                text='Описание автомобиля\nс несколькими строками\nи еще текст',
+                text=data,
                 bg='#3498db',
                 fg='white',
-                font=("Roboto", 12)
+                font=("Roboto", 12),
+                justify='left',
+                anchor='w'
             )
             desc.pack(pady=5)
 
-            self.window.after(100, lambda: my_canvas.xview_moveto(0))
+            
 
         
 
@@ -142,5 +167,11 @@ class CarSystem:
         tk.Frame(self.window, height=4, bg='#3498db').pack(fill='x', side='bottom')
 
     def on_add_auto(self):
-        new_win = Add_New_Car(self.window)
+        new_win = Add_New_Car(self)
         self.add_car_windows.append(new_win)
+
+    def update_cards(self):
+        for card in self.content.winfo_children():
+            card.destroy()
+
+        self.create_cards()

@@ -5,8 +5,9 @@ from random import randint
 from save_car import SaveCar
 
 class Add_New_Car:
-    def __init__(self, parent):
-        self.parent = parent
+    def __init__(self, car_system):
+        self.car_system = car_system
+        self.parent = car_system.window
         self.uid_label = None
         self.manufacturer_entry = None
         self.model_entry = None
@@ -224,7 +225,13 @@ class Add_New_Car:
     def get_uid(self):
         #return record_uid()
         if randint(1,2) == 1:
-            return 'AA-BB-CC-DD'
+            string = ""
+            hex_numbers = '0123456789ABCDEF'
+            for index in range (8):
+                string += hex_numbers[randint(0,15)]
+                if index % 2 == 1 and index !=7:
+                    string += "-"
+            return string
         else:
             return None
     

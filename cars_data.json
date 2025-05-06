@@ -1,26 +1,66 @@
 [
     {
-        "uid": "AA-BB-CC-DD",
-        "manufacturer": "bmw",
-        "model": "m5",
-        "year": "f90",
-        "country": "ger",
+        "uid": "53-94-80-49",
+        "manufacturer": "BMW",
+        "model": "M5 F90",
+        "year": "2019",
+        "country": "GER",
         "price": "90000"
     },
     {
-        "uid": "AA-BB-CC-DD",
-        "manufacturer": "audi",
-        "model": "rs6",
+        "uid": "7C-95-19-9F",
+        "manufacturer": "AUDI",
+        "model": "RS6 C8",
         "year": "2022",
-        "country": "ger",
+        "country": "GER",
         "price": "120000"
     },
     {
-        "uid": "AA-BB-CC-DD",
+        "uid": "7B-27-BA-7E",
+        "manufacturer": "AUDI",
+        "model": "RS6 C8",
+        "year": "2022",
+        "country": "GER",
+        "price": "120000"
+    },
+    {
+        "uid": "7B-27-BA-7E",
         "manufacturer": "RANGE ROVER",
-        "model": "SPORT",
-        "year": "2016",
+        "model": "EVOQUE",
+        "year": "2018",
         "country": "BRITAIN",
-        "price": "70000"
+        "price": "80000"
+    },
+    {
+        "uid": "30-80-0F-A8",
+        "manufacturer": "LIXIANG",
+        "model": "L9",
+        "year": "2023",
+        "country": "CHINA",
+        "price": "65000"
+    },
+    {
+        "uid": "F3-F7-73-74",
+        "manufacturer": "BMW",
+        "model": "X5 F30",
+        "year": "2015",
+        "country": "GER",
+        "price": "300000"
+    },
+    {
+        "uid": "A2-C0-83-57",
+        "manufacturer": "BMW",
+        "model": "330I",
+        "year": "2016",
+        "country": "GER",
+        "price": "20000"
+    },
+    {
+        "uid": "13-5E-91-C9",
+        "manufacturer": "AUDI",
+        "model": "RS7",
+        "year": "2020",
+        "country": "GER",
+        "price": "140000"
     }
 ]
