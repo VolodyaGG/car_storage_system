@@ -1,8 +1,26 @@
-{
-    "uid": "12-12-12-12",
-    "manufacturer": "bmw",
-    "model": "m5 f90",
-    "year": "2019",
-    "country": "ger",
-    "price": "90000"
-}
+[
+    {
+        "uid": "AA-BB-CC-DD",
+        "manufacturer": "bmw",
+        "model": "m5",
+        "year": "f90",
+        "country": "ger",
+        "price": "90000"
+    },
+    {
+        "uid": "AA-BB-CC-DD",
+        "manufacturer": "audi",
+        "model": "rs6",
+        "year": "2022",
+        "country": "ger",
+        "price": "120000"
+    },
+    {
+        "uid": "AA-BB-CC-DD",
+        "manufacturer": "RANGE ROVER",
+        "model": "SPORT",
+        "year": "2016",
+        "country": "BRITAIN",
+        "price": "70000"
+    }
+]

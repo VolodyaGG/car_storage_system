@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from uid_into_py import record_uid
 from random import randint
+from save_car import SaveCar
 
 class Add_New_Car:
     def __init__(self, parent):
@@ -51,7 +52,7 @@ class Add_New_Car:
         ).pack(pady=7)
 
         
-        refresh = Image.open("refresh.png").resize((24, 24), Image.LANCZOS)
+        refresh = Image.open("images/refresh.png").resize((24, 24), Image.LANCZOS)
         self.refresh_image = ImageTk.PhotoImage(refresh)
 
         #кнопка обновления
@@ -65,19 +66,22 @@ class Add_New_Car:
         self.refresh_button.place(relx=0.95, rely=0.5, anchor='center')
 
         #кнопки добавления
-        add = Image.open("add.png").resize((24, 24), Image.LANCZOS)
+        add = Image.open("images/add.png").resize((24, 24), Image.LANCZOS)
         self.add_image = ImageTk.PhotoImage(add)
        
         self.add_button = tk.Button(header, 
             image=self.add_image, 
             borderwidth=0, 
             bg='#2c3e50', 
-            activebackground='#2c3e50'
+            activebackground='#2c3e50',
+            command=self.save_car
         )
         self.add_button.place(relx=0.9, rely=0.5, anchor='center')
 
         tk.Frame(self.window, height=4, bg='#3498db').pack(fill='x', side='top')
 
+    def save_car(self):
+        SaveCar(self)
 
     def refresh_uid(self):
         new_uid = self.get_uid()
@@ -218,7 +222,7 @@ class Add_New_Car:
 
 
     def get_uid(self):
-        #return record_uid
+        #return record_uid()
         if randint(1,2) == 1:
             return 'AA-BB-CC-DD'
         else:

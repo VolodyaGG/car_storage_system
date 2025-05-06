@@ -40,7 +40,7 @@ class CarSystem:
         )
         title_label.pack(expand=True)
 
-        original_image = Image.open("button.png")
+        original_image = Image.open("images/button.png")
         resized_image = original_image.resize((40, 40), Image.LANCZOS)
         self.loadimage = ImageTk.PhotoImage(resized_image)
 
