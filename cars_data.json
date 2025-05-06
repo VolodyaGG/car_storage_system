@@ -22,45 +22,5 @@
         "year": "2022",
         "country": "GER",
         "price": "120000"
-    },
-    {
-        "uid": "7B-27-BA-7E",
-        "manufacturer": "RANGE ROVER",
-        "model": "EVOQUE",
-        "year": "2018",
-        "country": "BRITAIN",
-        "price": "80000"
-    },
-    {
-        "uid": "30-80-0F-A8",
-        "manufacturer": "LIXIANG",
-        "model": "L9",
-        "year": "2023",
-        "country": "CHINA",
-        "price": "65000"
-    },
-    {
-        "uid": "F3-F7-73-74",
-        "manufacturer": "BMW",
-        "model": "X5 F30",
-        "year": "2015",
-        "country": "GER",
-        "price": "300000"
-    },
-    {
-        "uid": "A2-C0-83-57",
-        "manufacturer": "BMW",
-        "model": "330I",
-        "year": "2016",
-        "country": "GER",
-        "price": "20000"
-    },
-    {
-        "uid": "13-5E-91-C9",
-        "manufacturer": "AUDI",
-        "model": "RS7",
-        "year": "2020",
-        "country": "GER",
-        "price": "140000"
     }
 ]
