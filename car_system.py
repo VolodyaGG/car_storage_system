@@ -93,7 +93,6 @@ class CarSystem:
         
         card_width = int(0.6 * self.window.winfo_screenwidth() / 3)
         card_height = int(0.45 * self.window.winfo_screenheight())
-        min_height = 200
 
         try:
             with open('cars_data.json', "r", encoding='utf-8') as file:
@@ -117,17 +116,28 @@ class CarSystem:
             card.pack_propagate(False)
             card.grid(row=0, column=i, padx=40, pady=20)
 
-            spacer = tk.Frame(card, height=min_height, bg='#3498db')
-            spacer.pack(fill='x')  
+            img_frame = tk.Frame(card, bg='#3498db')
+            img_frame.pack(side='top', fill='both', expand=True)
+
+            text_frame = tk.Frame(card, bg='#3498db')
+            text_frame.pack(side='bottom', fill='x')
+
+            if 'photo' in cars[i] and cars[i]['photo'][-4:] in ('.jpg', '.png') or cars[i]['photo'][-5:] == '.jpeg':
+                img = Image.open(cars[i]['photo'])
+                img.thumbnail((card_width - 30, card_height - 100))
+                photo = ImageTk.PhotoImage(img)
+                img_label = tk.Label(card, image=photo, bg='#3498db')
+                img_label.image = photo
+                img_label.pack(expand=True)
 
             tk.Label(
                 card,
-                text='Auto #'+str(i+1),
+                text='Auto №'+str(i+1),
                 wraplength=card_width - 20,
                 font=("Roboto", 18, 'bold'),
                 bg='#3498db',
                 fg='white'
-            ).pack(pady=5)
+            ).pack(pady=5, side='top')
             
             data = (f"Производитель: {cars[i]['manufacturer']}\n"
                 f"Модель: {cars[i]['model']}\n"
@@ -145,7 +155,7 @@ class CarSystem:
                 justify='left',
                 anchor='w'
             )
-            desc.pack(pady=5)
+            desc.pack(pady=5, side='top')
 
             
 

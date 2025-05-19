@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 from uid_into_py import record_uid
 from random import randint
 from save_car import SaveCar
+from tkinter import filedialog
 
 class Add_New_Car:
     def __init__(self, car_system):
@@ -30,6 +31,8 @@ class Add_New_Car:
 
         self.window = tk.Toplevel(self.parent)
         self.window.title("Добавление автомобиля")
+        self.window.transient(self.parent)
+        self.window.grab_set()
 
         self.window.geometry(f"{window_width}x{window_height}+{position_x}+{position_y}")
     
@@ -82,7 +85,160 @@ class Add_New_Car:
         tk.Frame(self.window, height=4, bg='#3498db').pack(fill='x', side='top')
 
     def save_car(self):
-        SaveCar(self)
+        SaveCar(self)     
+
+    def create_content(self):
+
+        content = tk.Frame(self.window, bg='#bbbbbb')
+        content.pack(fill='both', expand=True)
+        
+        form_frame = tk.Frame(content, bg='#bbbbbb')
+        form_frame.place(relx=0.5, rely=0.5, anchor='center')
+        
+        pady = 0.018 * self.parent.winfo_screenheight()
+
+        # UID
+        tk.Label(
+            form_frame,
+            text='UID:',
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold')    
+        ).grid(row=0, column=0, padx=10, pady=pady, sticky='e')
+        
+        self.uid_label = tk.Label(
+            form_frame,
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold')    
+        )
+        
+        recieved_uid = self.get_uid() 
+        self.uid_label.config(text=recieved_uid if recieved_uid else "UID не получен")
+        self.uid_label.grid(row=0, column=1, padx=10, pady=pady)
+
+        # Производитель
+        tk.Label(
+            form_frame,
+            text='Производитель:',
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold')    
+        ).grid(row=1, column=0, padx=10, pady=pady, sticky='e')
+
+        self.manufacturer_entry = tk.Entry(
+            form_frame,
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold'),
+            width=25  
+        )
+        self.manufacturer_entry.grid(row=1, column=1, padx=10, pady=pady)
+
+        # Модель
+        tk.Label(
+            form_frame,
+            text='Модель:',
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold')    
+        ).grid(row=2, column=0, padx=10, pady=pady, sticky='e')
+
+        self.model_entry = tk.Entry(
+            form_frame,
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold'),
+            width=25
+        )
+        self.model_entry.grid(row=2, column=1, padx=10, pady=pady)
+
+        # Год
+        tk.Label(
+            form_frame,
+            text='Год:',
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold')    
+        ).grid(row=3, column=0, padx=10, pady=pady, sticky='e')
+
+        self.year_entry = tk.Entry(
+            form_frame,
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold'),
+            width=25
+        )
+        self.year_entry.grid(row=3, column=1, padx=10, pady=pady)
+
+        # Страна
+        tk.Label(
+            form_frame,
+            text='Страна:',
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold')    
+        ).grid(row=4, column=0, padx=10, pady=pady, sticky='e')
+
+        self.country_entry = tk.Entry(
+            form_frame,
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold'),
+            width=25
+        )
+        self.country_entry.grid(row=4, column=1, padx=10, pady=pady)
+
+        # Цена
+        tk.Label(
+            form_frame,
+            text='Цена:',
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold')    
+        ).grid(row=5, column=0, padx=10, pady=pady, sticky='e')
+
+        self.price_entry = tk.Entry(
+            form_frame,
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold'),
+            width=25
+        )
+        self.price_entry.grid(row=5, column=1, padx=10, pady=pady)
+
+        # Картинка
+        tk.Label(
+            form_frame,
+            text='Изображение:',
+            fg="#2c3e50",
+            bg="#bbbbbb",
+            font=("Roboto", 15, 'bold')    
+        ).grid(row=6, column=0, padx=10, pady=pady, sticky='e')
+
+        choose_photo = Image.open("images/choose.png").resize((220, 50), Image.LANCZOS)
+        self.choose_image = ImageTk.PhotoImage(choose_photo)
+
+        self.choose_button = tk.Button(form_frame, 
+            image=self.choose_image, 
+            borderwidth=0, 
+            bg='#bbbbbb', 
+            activebackground='#bbbbbb',
+            command=self.choose_photo
+        )
+        self.choose_button.grid(row=6, column=1, padx=10, pady=pady)
+            
+
+        state = 'normal' if recieved_uid else 'disabled'
+        for entry in [
+            self.manufacturer_entry,
+            self.model_entry,
+            self.year_entry,
+            self.country_entry,
+            self.price_entry,
+            self.choose_button    
+        ]:
+            entry.config(state=state)
 
     def refresh_uid(self):
         new_uid = self.get_uid()
@@ -94,133 +250,12 @@ class Add_New_Car:
             self.model_entry,
             self.year_entry,
             self.country_entry,
-            self.price_entry
+            self.price_entry,
         ]:
             entry.delete(0, 'end')
             entry.config(state=state)
-            
 
-
-    def create_content(self):
-        content = tk.Frame(self.window, bg='#bbbbbb')
-        content.pack(fill='both', expand=True)
-
-        #uid
-        tk.Label(
-            content,
-            text='UID:',
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        ).grid(row=0, column=0, padx=10, pady=15)
-        
-        self.uid_label = tk.Label(
-            content,
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        )
-
-        
-        recieved_uid = self.get_uid() 
-        self.uid_label.config(text=recieved_uid if recieved_uid else "UID не получен")
-        self.uid_label.grid(row=0, column=1, padx=10, pady=15)
-
-        #manufacturer
-        tk.Label(
-            content,
-            text='Производитель:',
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        ).grid(row=1, column=0, padx=10, pady=15)
-
-        self.manufacturer_entry = tk.Entry(
-            content,
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        )
-        self.manufacturer_entry.grid(row=1, column=1, padx=10, pady=15)
-
-        #model
-        tk.Label(
-            content,
-            text='Модель:',
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        ).grid(row=2, column=0, padx=10, pady=15)
-
-        self.model_entry = tk.Entry(
-            content,
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        )
-        self.model_entry.grid(row=2, column=1, padx=10, pady=15)
-
-        #year
-        tk.Label(
-            content,
-            text='Год:',
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        ).grid(row=3, column=0, padx=10, pady=15)
-
-        self.year_entry = tk.Entry(
-            content,
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        )
-        self.year_entry.grid(row=3, column=1, padx=10, pady=15)
-
-        #country
-        tk.Label(
-            content,
-            text='Страна:',
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        ).grid(row=4, column=0, padx=10, pady=15)
-
-        self.country_entry = tk.Entry(
-            content,
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        )
-        self.country_entry.grid(row=4, column=1, padx=10, pady=15)
-
-        #price
-        tk.Label(
-            content,
-            text='Цена:',
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        ).grid(row=5, column=0, padx=10, pady=15)
-
-        self.price_entry = tk.Entry(
-            content,
-            fg="#2c3e50",
-            bg="#bbbbbb",
-            font=("Roboto", 15, 'bold')    
-        )
-        self.price_entry.grid(row=5, column=1, padx=10, pady=15)
-            
-        state = 'normal' if recieved_uid else 'disabled'
-        for entry in [
-            self.manufacturer_entry,
-            self.model_entry,
-            self.year_entry,
-            self.country_entry,
-            self.price_entry    
-        ]:
-            entry.config(state=state)
-
+        self.choose_button.config(state=state)
 
     def get_uid(self):
         #return record_uid()
@@ -234,4 +269,20 @@ class Add_New_Car:
             return string
         else:
             return None
+        
+    def choose_photo(self):
+        filetypes = (
+            ('Image files', '*.jpg *.jpeg *.png'),
+            ('All files', '*.*')
+        )
+
+        filename = filedialog.askopenfilename(
+            title = 'Выберите изображение автомобиля',
+            initialdir='/',
+            filetypes=filetypes    
+        )
+
+        if filename:
+            self.photo_path = filename
+
     

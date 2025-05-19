@@ -13,8 +13,16 @@ class SaveCar:
         year = self.parent.year_entry.get()
         country = self.parent.country_entry.get().upper()
         price = self.parent.price_entry.get()
+        photo_path = getattr(self.parent, 'photo_path', '')
 
-        car_dict = {'uid': uid, 'manufacturer': manufacturer, 'model': model, 'year': year, 'country': country, 'price': price}
+        car_dict = {'uid': uid, 
+                    'manufacturer': manufacturer, 
+                    'model': model, 
+                    'year': year, 
+                    'country': country, 
+                    'price': price, 
+                    'photo': photo_path
+                    }
 
         try:
             with open('cars_data.json', "r", encoding='utf-8') as file:
@@ -48,3 +56,4 @@ class SaveCar:
         mb.showinfo("Успех", "Автомобиль успешно сохранен!")
         self.parent.window.destroy()  # Закрываем окно добавления
         self.parent.car_system.update_cards()
+
