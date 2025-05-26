@@ -23,7 +23,7 @@ class Add_New_Car:
         screen_width = self.parent.winfo_screenwidth()
         screen_height = self.parent.winfo_screenheight()
 
-        window_height = int(0.5 * screen_height)
+        window_height = int(0.6 * screen_height)
         window_width = int(0.4 * screen_width)
 
         position_x = int((screen_width - window_width) // 2)

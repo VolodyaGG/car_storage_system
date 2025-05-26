@@ -13,7 +13,7 @@ class SaveCar:
         year = self.parent.year_entry.get()
         country = self.parent.country_entry.get().upper()
         price = self.parent.price_entry.get()
-        photo_path = getattr(self.parent, 'photo_path', '')
+        photo_path = self.parent.photo_path if hasattr(self.parent, 'photo_path') else ''
 
         car_dict = {'uid': uid, 
                     'manufacturer': manufacturer, 
