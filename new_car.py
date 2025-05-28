@@ -258,7 +258,12 @@ class Add_New_Car:
         self.choose_button.config(state=state)
 
     def get_uid(self):
-        #return record_uid()
+        UID = record_uid()
+        if UID != None:
+            return UID
+        else:
+            return None
+        '''
         if randint(1,2) == 1:
             string = ""
             hex_numbers = '0123456789ABCDEF'
@@ -268,7 +273,7 @@ class Add_New_Car:
                     string += "-"
             return string
         else:
-            return None
+            return None'''
         
     def choose_photo(self):
         filetypes = (
