@@ -1,9 +1,11 @@
 import serial
 import time
+from port_definition import return_com
 
-port = "COM6" #find name of a port using port_definition.py
 
 def record_uid():
+    port = return_com()
+
     ser = serial.Serial(port, 9600, timeout=1.7)
 
 

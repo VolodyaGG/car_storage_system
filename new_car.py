@@ -113,8 +113,7 @@ class Add_New_Car:
             font=("Roboto", 15, 'bold')    
         )
         
-        recieved_uid = self.get_uid() 
-        self.uid_label.config(text=recieved_uid if recieved_uid else "UID не получен")
+        self.uid_label.config(text="UID не получен")
         self.uid_label.grid(row=0, column=1, padx=10, pady=pady)
 
         # Производитель
@@ -229,7 +228,7 @@ class Add_New_Car:
         self.choose_button.grid(row=6, column=1, padx=10, pady=pady)
             
 
-        state = 'normal' if recieved_uid else 'disabled'
+        state = 'disabled'
         for entry in [
             self.manufacturer_entry,
             self.model_entry,
