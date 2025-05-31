@@ -4,6 +4,7 @@ from uid_into_py import record_uid
 from random import randint
 from save_car import SaveCar
 from tkinter import filedialog
+from path_func import resource_path
 
 class Add_New_Car:
     def __init__(self, car_system):
@@ -56,7 +57,7 @@ class Add_New_Car:
         ).pack(pady=7)
 
         
-        refresh = Image.open("images/refresh.png").resize((24, 24), Image.LANCZOS)
+        refresh = Image.open(resource_path("images/refresh.png")).resize((24, 24), Image.LANCZOS)
         self.refresh_image = ImageTk.PhotoImage(refresh)
 
         #кнопка обновления
@@ -70,7 +71,7 @@ class Add_New_Car:
         self.refresh_button.place(relx=0.95, rely=0.5, anchor='center')
 
         #кнопки добавления
-        add = Image.open("images/add.png").resize((24, 24), Image.LANCZOS)
+        add = Image.open(resource_path("images/add.png")).resize((24, 24), Image.LANCZOS)
         self.add_image = ImageTk.PhotoImage(add)
        
         self.add_button = tk.Button(header, 
@@ -215,7 +216,7 @@ class Add_New_Car:
             font=("Roboto", 15, 'bold')    
         ).grid(row=6, column=0, padx=10, pady=pady, sticky='e')
 
-        choose_photo = Image.open("images/choose.png").resize((220, 50), Image.LANCZOS)
+        choose_photo = Image.open(resource_path("images/choose.png")).resize((220, 50), Image.LANCZOS)
         self.choose_image = ImageTk.PhotoImage(choose_photo)
 
         self.choose_button = tk.Button(form_frame, 

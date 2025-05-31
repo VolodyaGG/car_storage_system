@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from new_car import Add_New_Car
 import json
+from path_func import resource_path
 
 class CarSystem:
     def __init__(self):
@@ -41,7 +42,7 @@ class CarSystem:
         )
         title_label.pack(expand=True)
 
-        original_image = Image.open("images/button.png")
+        original_image = Image.open(resource_path("images/button.png"))
         resized_image = original_image.resize((40, 40), Image.LANCZOS)
         self.loadimage = ImageTk.PhotoImage(resized_image)
 
@@ -123,7 +124,7 @@ class CarSystem:
             text_frame.pack(side='bottom', fill='x')
 
             if 'photo' in cars[i] and cars[i]['photo'][-4:] in ('.jpg', '.png') or cars[i]['photo'][-5:] == '.jpeg':
-                img = Image.open(cars[i]['photo'])
+                img = Image.open(resource_path(cars[i]['photo']))
                 img.thumbnail((card_width - 30, card_height - 100))
                 photo = ImageTk.PhotoImage(img)
                 img_label = tk.Label(card, image=photo, bg='#3498db')
