@@ -1,5 +1,4 @@
 import serial
-import time
 from port_definition import return_com
 
 

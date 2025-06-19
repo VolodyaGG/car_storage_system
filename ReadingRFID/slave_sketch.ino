@@ -12,7 +12,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 SoftwareSerial mySerial(RX_PIN, TX_PIN);
 
 unsigned long lastSendTime = 0;
-const unsigned long sendInterval = 1500;  // минимальный интервал отправки UID (1.5 сек)
+const unsigned long sendInterval = 1500;  // минимальный интервал отправки UID
 
 void setup() {
   Serial.begin(9600);
@@ -21,11 +21,22 @@ void setup() {
   SPI.begin();
   mfrc522.PCD_Init();
 
-  Serial.println("Slave ready");
+  Serial.println("Arduino ready (local + remote UID)");
 }
 
 void loop() {
   unsigned long currentTime = millis();
+
+  // === 📥 Прием UID от других Arduino ===
+  if (mySerial.available()) {
+    String incomingUID = mySerial.readStringUntil('\n'); // читаем строку до \n
+    incomingUID.trim(); // убираем лишние пробелы и переносы
+    if (incomingUID.length() > 0) {
+      Serial.print("Received from another Arduino: ");
+      Serial.println(incomingUID);
+    }
+  }
+
 
   if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
     if (currentTime - lastSendTime > sendInterval) {
@@ -37,8 +48,8 @@ void loop() {
       }
       uidStr.toUpperCase();
 
-      mySerial.println(uidStr);
-      Serial.print("Sent UID: ");
+      mySerial.println(uidStr);  // отправка по SoftwareSerial другим Arduino
+      Serial.print("Sent local UID: ");
       Serial.println(uidStr);
 
       mfrc522.PICC_HaltA();

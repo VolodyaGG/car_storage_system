@@ -7,4 +7,3 @@ def return_com():
         if "Arduino" in port.description or "CH340" in port.description:
             return port.device
 
-return_com()
